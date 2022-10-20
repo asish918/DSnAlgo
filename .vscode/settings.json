@@ -63,6 +63,7 @@
         "iterator": "cpp",
         "map": "cpp",
         "__tree": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "queue": "cpp"
     }
 }
