@@ -32,6 +32,7 @@ Node* insert(Node* head, int value){
     }
 }
 
+// Iterative
 Node* revList(Node* head){
     Node* dummy = NULL;
     while(head != NULL){
@@ -40,6 +41,17 @@ Node* revList(Node* head){
         dummy = head;
         head = next;
     }
+    return dummy;
+}
+
+// Recursive
+Node* revListRecur(Node* head){
+    if(!head || !(head))
+        return head;
+
+    Node* dummy = revListRecur(head->next);
+    head->next->next = head;
+    head->next = NULL;
     return dummy;
 }
 
