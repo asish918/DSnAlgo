@@ -1,39 +1,30 @@
 #include<iostream>
-#include <algorithm>
+#include <stack>
 using namespace std;
 
 int main(){
     string s = "the sky is blue";
-    
-    reverse(s.begin(), s.end());
 
-    int index = 0;
-    int l = 0;
-    int r = 0;
-    int n = s.size();
+    stack<string> st;
+    string temp = "";
 
-    while(index < n){
-        bool isWord = false;
-        while(index < n && s[index] != ' '){
-            s[r] = s[index];
-            r++;
-            index++;
-
-            isWord = true;
-        }
-
-        if(isWord){
-            reverse(s.begin() + l, s.begin() + r);
-            s[r] = ' ';
-            r++;
-            l = r;
-        }
-
-        index++;
+    for(int i = 0; i<s.length(); i++){
+        if(s[i] != ' ')
+            temp+=s[i];
+        else {
+            st.push(temp);
+            temp = "";
+        };
     }
-    
-    s.resize(r-1);
+    st.push(temp);
 
-    cout << s << endl;
+    string res = "";
+    while(!st.empty()){
+        temp = st.top();
+        st.pop();
+        res+=temp + " ";
+    }
+    res.pop_back();
+    cout << res << endl;
     return 0;
 }
