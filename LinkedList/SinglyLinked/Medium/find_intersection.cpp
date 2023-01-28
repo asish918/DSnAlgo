@@ -1,4 +1,6 @@
 #include<iostream>
+#include<cstdlib>
+#include<unordered_map>
 using namespace std;
 
 struct Node{
@@ -34,8 +36,8 @@ Node* insert(Node* head, int value){
 void createIntersection(Node* &head1, Node* &head2){
     Node* dummy = NULL;
     dummy = insert(dummy, 8);
-    dummy = insert(dummy, 4);
-    dummy = insert(dummy, 5);
+    dummy = insert(dummy, 7);
+    dummy = insert(dummy, 6);
 
     Node* temp1 = head1;
     Node* temp2 = head2;
@@ -51,7 +53,7 @@ void createIntersection(Node* &head1, Node* &head2){
 }
 
 // Noob brute force
-Node* find_intersection(Node* head1, Node* head2){
+Node* find_intersection_noob(Node* head1, Node* head2){
     Node* temp = head1;
 
     while(head2){
@@ -68,6 +70,85 @@ Node* find_intersection(Node* head1, Node* head2){
     return NULL;
 }
 
+Node* find_intersection_better(Node* head1, Node* head2){
+    unordered_map<Node*, int> m;
+
+    Node* temp = head1;
+    while(temp != NULL){
+        m[temp] = 1;
+        temp = temp->next;
+    }
+
+    temp = head2;
+    while(temp != NULL){
+        if(m.find(temp) != m.end()){
+            return temp;
+        }
+        
+        temp = temp->next;
+    }
+
+    return NULL;
+}
+
+Node* find_intersection_optimal1(Node* head1, Node* head2){
+    int length1 = 0;
+    int length2 = 0;
+
+    Node* temp1 = head1;
+    Node* temp2 = head2;
+
+    while(temp1 != NULL || temp2 != NULL){
+        if(temp1 != NULL){
+            length1++;
+            temp1 = temp1->next;
+        }
+           
+        else if(temp2 != NULL){
+            length2++;
+            temp2 = temp2->next;
+        }   
+    }
+    
+    int diff = abs(length1 - length2);
+
+    temp1 = head1;
+    temp2 = head2;
+
+    while(diff--){
+        if(length2 > length1)
+            temp2 = temp2->next;
+        else if(length1 > length2){
+            temp1 = temp1->next;
+        }
+    }
+
+    while(temp1 != NULL && temp2 != NULL){
+        if(temp1 == temp2)
+            return temp1;
+
+        temp1 = temp1->next;
+        temp2 = temp2->next;
+    }
+
+    return NULL;
+}
+
+// Best
+Node* find_intersection_optimal2(Node* head1, Node* head2){
+    if(head1 == NULL || head2 == NULL) return NULL;
+
+    Node* temp1 = head1;
+    Node* temp2 = head2;
+
+    while(temp1 != temp2){
+        temp1 = (temp1 == NULL) ? head2 : temp1->next;
+        temp2 = (temp2 == NULL) ? head1 : temp2->next;
+    }
+
+    return temp1;
+}
+
 void printList(Node* head){
     while(head != NULL)
     {
@@ -78,19 +159,22 @@ void printList(Node* head){
 }
 
 int main(){
-    head1 = insert(head1, 4);
     head1 = insert(head1, 1);
+    head1 = insert(head1, 2);
 
-    head2 = insert(head2, 5);
-    head2 = insert(head2, 6);
+    head2 = insert(head2, 2);
+    head2 = insert(head2, 8);
     head2 = insert(head2, 1);
+    head2 = insert(head2, 3);
 
     createIntersection(head1, head2);
 
     printList(head1);
     printList(head2);
 
-    Node* ans = find_intersection(head1, head2);
+    //Node* ans = find_intersection_noob(head1, head2);
+    //Node* ans = find_intersection_better(head1, head2);
+    Node* ans = find_intersection_optimal1(head1, head2);
 
     if(ans)
         cout << ans->data << " " << endl;
