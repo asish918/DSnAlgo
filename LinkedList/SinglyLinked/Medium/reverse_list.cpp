@@ -46,7 +46,7 @@ Node* revList(Node* head){
 
 // Recursive
 Node* revListRecur(Node* head){
-    if(!head || !(head))
+    if(!head || !(head->next)) //Check for only head is required if NULL is passed initially: Edge Case 
         return head;
 
     Node* dummy = revListRecur(head->next);
@@ -70,10 +70,11 @@ int main(){
     head = insert(head, 2);
     head = insert(head, 3);
     head = insert(head, 4);
+    head = insert(head, 5);
     
     printlist(head);
 
-    head = revList(head);
+    head = revListRecur(head);
 
     printlist(head);
 

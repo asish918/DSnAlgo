@@ -44,7 +44,30 @@ Node* reverse(Node* head){
     return prev;
 }
 
-Node* add_one(Node* head){
+int addOneRecur(struct Node* head) {
+    if(!head)
+        return 1;
+
+    int carry = addOneRecur(head->next);
+    
+    int sum = head->data + carry;
+    head->data = sum % 10;
+    return sum / 10;
+}
+
+Node* add_one_optimal(Node* head) {
+    int carry = addOneRecur(head);
+
+    if(carry) {
+        Node* new_node = new Node(1);
+        new_node->next = head;;
+        head = new_node;
+    }
+
+    return head;
+}
+
+Node* add_one_noob(Node* head){
     Node* new_head = reverse(head);
     Node* curr = new_head; 
     Node* prev = NULL;
@@ -84,7 +107,8 @@ int main(){
     head = insert(head, 9);
     head = insert(head, 9);
 
-    head = add_one(head);
+    //head = add_one_noob(head);
+    head = add_one_optimal(head);
 
     printList(head);
     return 0;

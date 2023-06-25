@@ -89,8 +89,13 @@ Node* sort_approach_2(Node* head){
     
     oneTail->next = twoHead->next;
 
-    return zeroHead->next;
+   Node* new_head = zeroHead->next;
 
+   delete oneHead;
+   delete twoHead;
+   delete zeroHead;
+
+   return new_head;
 }
 
 Node* insert(Node* head, int value){
@@ -117,14 +122,11 @@ void printList(Node* head){
 }
 
 int main(){
-    head = insert(head, 1);
     head = insert(head, 2);
     head = insert(head, 2);
     head = insert(head, 1);
     head = insert(head, 2);
-    head = insert(head, 0);
-    head = insert(head, 2);
-    head = insert(head, 2);
+    head = insert(head, 1);
 
     //head = sort_approach_1(head);
     head = sort_approach_2(head);

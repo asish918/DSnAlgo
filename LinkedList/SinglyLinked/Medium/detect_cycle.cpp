@@ -16,8 +16,6 @@ class Node {
 
 Node* head = NULL;
 
-// unordered_map<Node*, bool> m;
-
 Node* insert(Node* head, int value){
     Node* new_node = new Node(value);
 
@@ -60,9 +58,9 @@ bool detectCycle(Node*& head){
     Node *temp = head;
     while (temp->next != NULL)
         temp = temp->next;
-
     temp->next = new_node;
     new_node->next = head->next->next;
+    //
 
     if(head == NULL || head->next == NULL)
         return false;
@@ -70,7 +68,7 @@ bool detectCycle(Node*& head){
     Node* fast = head;
     Node* slow = head;
 
-    while(fast->next != NULL && fast->next->next != NULL){
+    while(fast != NULL && fast->nextt != NULL){
         fast = fast->next->next;
         slow = slow->next;
 

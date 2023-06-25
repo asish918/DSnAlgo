@@ -35,6 +35,7 @@ Node* rotateKNoob(Node* head, int k){
         Node* temp = head;
         while(temp->next->next != NULL)
             temp = temp->next;
+
         temp->next->next = head;
         head = temp->next;
         temp->next = NULL;

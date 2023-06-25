@@ -36,7 +36,7 @@ void findMiddle(Node* head){
     Node* slow = head;
     Node* fast = head;
 
-    while(fast != NULL && fast != NULL){
+    while(fast != NULL && fast->next != NULL){
         slow = slow->next;
         fast = fast->next->next;
     }
@@ -58,6 +58,7 @@ int main(){
     head = insert(head, 2);
     head = insert(head, 3);
     head = insert(head, 4);
+    head = insert(head, 5);
 
     printList(head);
     findMiddle(head);

@@ -72,3 +72,17 @@ int main(){
 
     return 0;
 }
+
+/*
+ The function removeDuplicates takes a pointer to a pointer of the head of the doubly linked list as the parameter.
+It initializes two pointers, fast and slow, to the head of the list.
+The fast pointer is used to iterate through the list to check for duplicates.
+The slow pointer is used to keep track of the current non-duplicate element.
+The loop continues until the fast pointer reaches the end of the list.
+Inside the loop, it checks if the data of fast and slow nodes are different.
+If they are different, it means a non-duplicate element is found.
+In this case, it updates the next and prev pointers of slow and fast nodes to maintain the list structure.
+Then, it moves the slow pointer to the next non-duplicate element.
+If they are the same, it means a duplicate element is found. In this case, it moves the fast pointer to the next node.
+After the loop ends, it sets the next pointer of the last non-duplicate element (pointed by slow) to NULL.
+ */
