@@ -3,23 +3,19 @@ using namespace std;
 
 int main(){
     int arr[] = {1, 1, 2, 3, 3, 4, 5};
-    int unique_count = 0;
-    int j = 0;
+    int n = sizeof(arr)/sizeof(int);
 
-    for(int i = 0; i<(sizeof(arr) / sizeof(int)) - 1; i++){
-        if(arr[i] == arr[i+1])
-            continue;
-        unique_count++;
-        arr[j++] = arr[i];
+    int i = 0;
+    for(int j = 1; j<n; j++){
+        if(arr[j] != arr[i]){
+            arr[i+1] = arr[j];
+            i++;
+        }
     }
-
-    ++unique_count;
-
-    arr[j] = arr[sizeof(arr) / sizeof(int) - 1];
 
     cout << "Unique array - ";
 
-    for(int k = 0; k < unique_count; k++){
+    for(int k = 0; k <= i; k++){
         cout << arr[k] << " ";
     }
 
