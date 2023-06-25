@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 using namespace std;
 
@@ -34,7 +35,6 @@ int main()
     low = 0;
     high = n - 1;
     mid = low + (high - low) / 2;
-    mid = low + (high - low) / 2;
 
     while (low <= high)
     {
@@ -52,6 +52,7 @@ int main()
     }
 
     cout << first_occur << " " << last_occur << endl;
+    cout << lower_bound(arr, arr + n, target) - arr << " " << upper_bound(arr, arr + n, target) - arr - 1;
 
     return 0;
 }
