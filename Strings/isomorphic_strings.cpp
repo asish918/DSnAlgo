@@ -2,31 +2,27 @@
 using namespace std;
 
 int main(){
-    string s = "badc";
-    string t = "baba";
-
-    bool flag = true;
+    string s = "egg";
+    string t = "add";
 
     char shash[128] = {0};
     char thash[128] = {0};
 
-    for(int i = 0; i<s.length(); i++){
-        if(shash[s[i]] != 0){
-            if(shash[s[i]] != t[i])
-                flag = false;
+    for(int i = 0; i<s.length(); i++) {
+        if(shash[s[i]] != 0 && shash[s[i]] != t[i]){
+            cout << "False" << endl;
+            return 0;
         }
-        else
-            shash[s[i]] = t[i];
+        if(thash[t[i]] != 0 && thash[t[i]] != s[i]){
+            cout << "False" << endl;
+            return 0;
+        }
 
-        if(thash[t[i]] != 0){
-            if(thash[t[i]] != s[i])
-                flag = false;
-        }
-        else
-            thash[t[i]] = s[i];
+        shash[s[i]] = t[i];
+        thash[t[i]] = s[i];
     }
-
-    cout << flag << endl;
+    
+    cout << "True" << endl;
 
     return 0;
 }

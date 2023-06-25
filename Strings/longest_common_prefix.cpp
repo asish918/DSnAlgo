@@ -1,37 +1,25 @@
 #include<iostream>
+#include<algorithm>
 #include <vector>
 #include <string>
 using namespace std;
 
 int main(){
-    vector<string> strs  { "cir", "car" };
+    vector<string> strs = {
+        "flower",
+        "flow",
+        "flight"
+    };
 
-    string temp = strs[0];
+    int ans = strs[0].length();
+    int n = strs.size();
 
-    for(int i = 1; i<strs.size(); i++){
-        string prefix_check = "";
-
+    for(int i = 1; i<n; i++) {
         int j = 0;
-        while(j < strs[i].length()){
-            if(strs[i][j] == temp[j])
-                prefix_check+=strs[i][j];
-            else{
-                break;
-            }
-            j++;
-        }
-
-        if(prefix_check.length() < 1){
-            temp = "";
-            break;
-        }
-        else {
-            temp = prefix_check;
-            prefix_check = "";
-        }
+        while(j < strs[i].length() && strs[i][j] == strs[0][j]) j++;
+        ans = min(ans, j);
     }
 
-    cout << temp << endl;
-
+    cout << strs[0].substr(0, ans) << endl;
     return 0;
 }

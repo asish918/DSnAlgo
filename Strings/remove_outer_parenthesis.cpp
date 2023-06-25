@@ -1,26 +1,23 @@
 #include<iostream>
-#include<stack>
 using namespace std;
 
-int main(){
-    stack<char> s;
-    string ques = "(()())(())";
+int main() {
+    string s = "(()())(())(()(()))";
+    
     string res = "";
+    int balance = 0;
+    int start = 0;
 
-    int index = 0, pos = 0;
+    for(int i = 0; i<s.length(); i++) {
+        if(s[i] == '(')
+            balance++;
+        else if(s[i] == ')')
+            balance--;
 
-    while(index < ques.length()){
-        if(ques[index] == '(')
-            s.push(')');
-        else
-         s.pop();
-
-        if(s.empty()){
-            res+=ques.substr(pos + 1, index - pos - 1);
-            pos = index + 1;
+        if(balance == 0) {
+            res += s.substr(start + 1, i - start - 1);
+            start = i + 1;
         }
-
-        index++;
     }
 
     cout << res << endl;

@@ -4,18 +4,16 @@ using namespace std;
 
 int main(){
     string s = "abcde";
-    string goal = "abced";
+    string goal = "bcdea";
 
     bool flag = false;
 
-    int maxRotations = s.size();
+    int len = s.length();
 
-    while(maxRotations){
-        if(!s.compare(goal)) flag = true;
+    while(len--) {
+        if(s == goal) flag = true;
 
-        rotate(s.begin(), s.begin() + 1, s.end());
-
-        maxRotations--;
+        s = s.substr(1) + s[0];
     }
 
     cout << flag << endl;
