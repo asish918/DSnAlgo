@@ -1,4 +1,6 @@
 #include<iostream>
+#include<climits>
+#include<vector>
 #include<unordered_map>
 #include<algorithm>
 using namespace std;
@@ -37,6 +39,59 @@ string bruteForce(string S, string P) {
     }
 
     return minWindow;
+}
+
+
+//Similar approach but uses arrays instead of maps to avoid TLE
+string smallestWindow(const std::string& S, const std::string& P) {
+    int n = S.length();
+    int m = P.length();
+
+    std::vector<int> charCountP(26, 0);
+    for (char c : P) {
+        charCountP[c - 'a']++;
+    }
+
+    std::vector<int> charCountS(26, 0);
+    int count = 0;
+    int minWindowSize = INT_MAX;
+    int minWindowStart = -1;
+
+    int left = 0;
+    int right = 0;
+
+    while (right < n) {
+        char c = S[right];
+        charCountS[c - 'a']++;
+
+        if (charCountP[c - 'a'] > 0 && charCountS[c - 'a'] <= charCountP[c - 'a']) {
+            count++;
+        }
+
+        while (count == m) {
+            int windowSize = right - left + 1;
+            if (windowSize < minWindowSize) {
+                minWindowSize = windowSize;
+                minWindowStart = left;
+            }
+
+            char leftChar = S[left];
+            charCountS[leftChar - 'a']--;
+            if (charCountP[leftChar - 'a'] > 0 && charCountS[leftChar - 'a'] < charCountP[leftChar - 'a']) {
+                count--;
+            }
+
+            left++;
+        }
+
+        right++;
+    }
+
+    if (minWindowStart == -1) {
+        return "-1";
+    }
+
+    return S.substr(minWindowStart, minWindowSize);
 }
 
 string optimal(string S, string P) {

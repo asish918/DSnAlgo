@@ -2,24 +2,27 @@
 #include <queue>
 using namespace std;
 
-void kthLargestElement(int arr[], int n, int k){
-    priority_queue <int, vector<int>, greater<int> > q;
+int kthLargestElement(int arr[], int n, int k){
+    //Max-Heap
+    //priority_queue<int, vector<int>> q;
+    //for(int i = 0; i<n; i++)
+    //    q.push(arr[i]);
 
-    for(int i = 0; i < k; i++)
+    //for(int i = 0; i < k - 1; i++)
+    //    q.pop();
+
+
+    //Min-Heap
+    priority_queue <int, vector<int>, greater<int> > q;
+    for(int i = 0; i < n; i++) {
         q.push(arr[i]);
 
-    for(int i = k; i < n; i++){
-        if(arr[i] > q.top()){
+        if(q.size() > k) {
             q.pop();
-            q.push(arr[i]);
         }
     }
-
-    while(!q.empty()){
-        cout << q.top() << " ";
-        q.pop();
-    }
-
+    
+    return q.top();
 }
 
 int main(){
@@ -27,7 +30,11 @@ int main(){
     int n = sizeof(arr) / sizeof(int);
     int k = 2;
 
-    kthLargestElement(arr, n, k);
+    cout << kthLargestElement(arr, n, k) << endl;
 
     return 0;
 }
+
+/*
+
+*/

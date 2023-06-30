@@ -28,6 +28,11 @@ int numberOfSubstrings(string s){
     }
 
     return n * (n + 1)/2 - count_substr;
+
+    //To Prevent overflow for large s.length()
+    //long long total_substrings = static_cast<long long>(n) * (n + 1) / 2;
+    //return total_substrings - count_substr;
+}
 }
 
 int main(){

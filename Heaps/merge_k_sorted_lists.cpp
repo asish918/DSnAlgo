@@ -62,7 +62,7 @@ class cmp {
 };
 
 ListNode* mergeKSortedLists(vector<ListNode*> &v){
-    priority_queue<ListNode*, vector<ListNode*>, cmp> q;
+    priority_queue<ListNode*, vector<ListNode*>, cmp> q; //min-heap
 
     ListNode* dummy = new ListNode(-1);
     ListNode* tail = dummy;
@@ -115,3 +115,25 @@ int main(){
     printList(ans);
     return 0;
 }
+
+/*
+The code starts by declaring a priority queue q of ListNode pointers. It uses the cmp comparator to compare the ListNode pointers. The cmp comparator should be defined separately in the code.
+
+It then creates a dummy ListNode with a value of -1 and initializes a tail pointer to the dummy node. This dummy node will serve as the head of the merged list, and the tail pointer will be used to keep track of the last node in the merged list.
+
+Next, the code iterates through each ListNode pointer in the vector v. If the current ListNode pointer is not NULL, it means there are still elements in that linked list, so it pushes that ListNode pointer into the priority queue q.
+
+After inserting all the ListNode pointers into the priority queue, the code enters a loop that continues until the priority queue q becomes empty.
+
+Inside the loop, it retrieves the top element (ListNode with the smallest value) from the priority queue q using q.top(). This ListNode will be the next node in the merged list.
+
+The code appends this node to the merged list by setting tail->next to the current node and then updating the tail pointer to the current node. This adds the node to the end of the merged list.
+
+It then removes the top element from the priority queue using q.pop(), as it has already been added to the merged list.
+
+If the next pointer of the current node is not NULL, it means there are more nodes remaining in that linked list. So, the code pushes the next node of the current node into the priority queue q using q.push(temp->next).
+
+The loop continues until all the ListNode pointers have been processed and the priority queue q becomes empty.
+
+Finally, the code returns the next node of the dummy node, which is the head of the merged list.
+ */
