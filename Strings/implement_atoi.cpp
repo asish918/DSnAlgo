@@ -4,7 +4,7 @@
 using namespace std;
 
 int main(){
-    string s = "-1234";
+    string s = "46";
     int ans = 0;
     int i = 0;
     int sign = 1;

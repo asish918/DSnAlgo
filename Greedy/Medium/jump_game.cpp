@@ -19,3 +19,11 @@ int main(){
 
     return 0;
 }
+
+/*
+In this modified approach, we start iterating from the second-to-last index (n-2) and move towards the first index. At each index, we check if we can reach the last reachable index from the current index. If we can, we update the lastReachable variable with the current index.
+
+By iterating from the end of the array, we are able to find the earliest index from where we can reach the last index. If the lastReachable variable becomes 0 after iterating through the array, it means we can reach the last index starting from the first index, so we return true. Otherwise, we return false.
+
+This modified approach also has a time complexity of O(n), where n is the number of elements in the jumps array, as we iterate through the array only once, starting from the end.
+*/
