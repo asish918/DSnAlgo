@@ -95,3 +95,64 @@ int main(){
 
     return 0;
 }
+
+/*
+### Incase Reference to target node is not given
+
+void markParents(Node* root, Node*& target_node, int target, unordered_map<Node*, Node*>& parent_track) {
+    if(root == NULL)
+        return;
+
+    if(root->data == target)
+        target_node = root;
+
+    if(root->left) parent_track[root->left] = root;
+    if(root->right) parent_track[root->right] = root;
+
+    markParents(root->left, target_node, target, parent_track);
+    markParents(root->right, target_node, target, parent_track);
+}
+
+void nodesAtK(Node* root, int target, int K, vector<int>& ans) {
+    unordered_map<Node*, Node*> parent_track;
+    unordered_map<Node*, bool> visited;
+    Node* target_node = NULL;
+    
+    markParents(root, target_node, target, parent_track);
+
+    queue<Node*> q;
+    q.push(target_node);
+    visited[target_node] = true;
+    int curr_level = 0;
+
+    while(!q.empty()) {
+        int size = q.size();
+        if(curr_level++ == K) break;
+
+        while(size--) {
+            Node* node = q.front();
+            q.pop();
+
+            if(node->left && !visited[node->left]) {
+                q.push(node->left);
+                visited[node->left] = true;
+            }
+
+            if(node->right && !visited[node->right]) {
+                q.push(node->right);
+                visited[node->right] = true;
+            }
+
+            if(parent_track[node] && !visited[parent_track[node]]) {
+                q.push(parent_track[node]);
+                visited[parent_track[node]] = true;
+            }
+        }
+    }
+
+    while(!q.empty()) {
+        ans.push_back(q.front()->data);
+        q.pop();
+    }
+}
+*/

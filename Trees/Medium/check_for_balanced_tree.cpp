@@ -47,9 +47,7 @@ bool checkBalanced(struct Node* root){
     bool left = checkBalanced(root->left);
     bool right = checkBalanced(root->right);
 
-    if(!left || !right) return false;
-
-    return true;
+    return left && right;
 }
 
 int main(){

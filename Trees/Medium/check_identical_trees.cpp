@@ -37,3 +37,20 @@ int main(){
 
     return 0;
 }
+
+/*
+// Much better way of creating trees
+struct node* solve(vector<int>& vec, int index) {
+        if(index >= vec.size())
+            return NULL;
+        
+        node* root = newNode(vec[index]);
+        root->left = solve(vec, 2 * index + 1);
+        root->right = solve(vec, 2 * index + 2);
+        return root;
+    }
+    void create_tree(node*& root0, vector<int> &vec){
+        //Your code goes here
+        root0 = solve(vec, 0);
+    }
+*/

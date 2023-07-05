@@ -1,4 +1,5 @@
 #include <iostream>
+#include<queue>
 #include <algorithm>
 using namespace std;
 
@@ -20,6 +21,29 @@ int heightOfTree(struct Node* root){
     int rh = heightOfTree(root->right);
 
     return 1 + max(lh, rh);
+}
+
+int levelOrderHeight(Node* root) {
+    int level = 0;
+    if(root == NULL) return level;
+
+    queue<Node*> q;
+    q.push(root);
+
+    while(!q.empty()) {
+        level++;
+        int size = q.size();
+        
+        while(size--) {
+            auto i = q.front();
+            q.pop();
+
+            if(i->left) q.push(i->left);
+            if(i->right) q.push(i->right);
+        }
+    }
+
+    return level;
 }
 
 int main(){

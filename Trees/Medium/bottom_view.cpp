@@ -52,3 +52,23 @@ int main(){
 
     return 0;
 }
+/// code for recrsive approach,just keep track of row number.
+//Structur of map: colum_no={data,rownumber}
+//if row number is larger than previous stored data,then replace.
+
+void f(BinaryTreeNode<int> * root, int row,int col,map<int,pair<int,int>> &mp){
+    if(root==0)return;
+
+
+
+   if(row>=mp[col].second)
+   mp[col]={root->data,row};
+
+
+
+    f(root->left,row+1,col-1,mp);
+    f(root->right,row+1,col+1,mp);
+
+}*
+
+*/
