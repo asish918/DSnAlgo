@@ -15,7 +15,7 @@ struct Node {
     }
 };
 
-//Apporach 1 (O n^2)
+//Apporach 1 (O n^2) Sort the preorder and get the inorder(inorder of BST is sorted). Use both to create a tree
 
 struct Node* constructTree(vector<int> preorder, int* preIndex, int low, int high, int size){
     if(*preIndex >= size || low > high)

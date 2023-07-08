@@ -73,20 +73,19 @@ void betterApproach(vector<vector<int>> arr){
 }
 
 void optimalApproach(vector<vector<int>> arr){
-    int col1 = 1;
-
     int n = arr.size();
     int m = arr[0].size();
+
+    bool fr = false;
+    bool fc = false;
 
     for(int i = 0; i<n; i++){
         for(int j = 0; j<m; j++){
             if(arr[i][j] == 0){
+                if(i == 0) fr = true;
+                if(j == 0) fc == true;
                 arr[i][0] = 0;
-
-                if(j != 0)
-                    arr[0][j] = 0;
-                else
-                    col1 = 0;;
+                arr[0][j] = 0;
             }
         }
     }
@@ -99,12 +98,12 @@ void optimalApproach(vector<vector<int>> arr){
         }
     }
 
-    if(arr[0][0] == 0){
+    if(fr){
         for(int j = 0; j<m; j++)
             arr[0][j] = 0;
     }
 
-    if(col1 == 0)
+    if(fc)
         for(int i = 0; i<n; i++)
             arr[i][0] = 0;
 

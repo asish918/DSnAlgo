@@ -22,6 +22,17 @@ int findMin(struct Node* root){
     return root->data;
 }
 
+
+int findMax(struct Node* root){
+    if(root == NULL)
+        return -1;
+    
+    while(root->right != NULL)
+        root = root->right;
+
+    return root->data;
+}
+
 int main(){
     struct Node* root = new Node(5);
     root->left = new Node(4);
