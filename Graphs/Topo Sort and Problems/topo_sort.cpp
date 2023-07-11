@@ -1,68 +1,83 @@
 #include<iostream>
-#include<vector>
+#include<algorithm>
+#include<utility>
 #include<queue>
 #include<stack>
+#include<vector>
 using namespace std;
 
+void dfs(int node, vector<int> adjList[], int vis[], stack<int>& st) {
+    vis[node] = 1;
+
+    for(auto adjNode : adjList[node]) {
+        if(!vis[adjNode])
+            dfs(adjNode, adjList, vis, st);
+    }
+
+    st.push(node);
+}
+
 //Kahn's Algo
-void topo_travel_bfs(int V, vector<int> adjList[]){
+void topoSortBFS(vector<int> adjList[], int V) {
     int indegree[V] = {0};
 
-    for(int i = 0; i<V; i++)
+    for(int i = 0; i < V; i++) 
         for(auto adjNode : adjList[i])
             indegree[adjNode]++;
 
     queue<int> q;
 
-    for(int i = 0; i<V; i++)
+    for(int i = 0; i < V; i++)
         if(indegree[i] == 0)
             q.push(i);
 
-    while(!q.empty()){
+    while(!q.empty()) {
         int node = q.front();
-        cout << node << " ";
         q.pop();
 
-        for(auto adjNode : adjList[node]){
+        cout << node << " ";
+
+        for(auto adjNode : adjList[node]) {
             indegree[adjNode]--;
 
             if(indegree[adjNode] == 0)
                 q.push(adjNode);
         }
     }
+    cout << endl;
 }
 
-void topo_travel_dfs(int node, vector<int> adjList[], stack<int> &st, int vis[]){
-    vis[node] = 1;
+void topoSort(vector<int> adjList[], int V) {
+    stack<int> st;
+    int vis[V] = {0};
 
-    for(auto adjNode : adjList[node]){
-        if(!vis[adjNode])
-            topo_travel_dfs(adjNode, adjList, st, vis);
+    for(int i = 0; i<V; i++) {
+        if(!vis[i])
+            dfs(i, adjList, vis, st);
     }
 
-    st.push(node);
+    while(!st.empty()) {
+        cout << st.top() << " ";
+        st.pop();
+    }
+    cout << endl;
 }
 
-int main(){
-    vector<int> adjList[4] = {
-        {},
-        {0},
-        {0},
-        {0}
-    };
+int main() {
+    int V = 6;
+    vector<int> adjList[V];
 
-    topo_travel_bfs(4, adjList);
-    //    stack<int> st;
-    //   int vis[4] = {0};
-    //
-    //   for(int i = 0; i<4; i++)
-    //      if(!vis[i])
-    //         topo_travel_dfs(i, adjList, st, vis);
-    //
-    //   while(!st.empty()){
-    //      cout << st.top() << endl;
-    //     st.pop();
-    //}
+    adjList[2].push_back(3);
 
+    adjList[3].push_back(1);
+
+    adjList[4].push_back(0);
+    adjList[4].push_back(1);
+
+    adjList[5].push_back(0);
+    adjList[5].push_back(2);
+
+    topoSort(adjList, V);
+    topoSortBFS(adjList, V);
     return 0;
 }

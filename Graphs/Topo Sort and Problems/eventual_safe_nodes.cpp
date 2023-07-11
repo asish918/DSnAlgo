@@ -4,7 +4,41 @@
 #include<queue>
 using namespace std;
 
-void eventualSafeNodes(vector<vector<int>> graph){
+bool dfs(int node, vector<vector<int>>& graph, int visited[], int pathVisited[]) {
+    visited[node] = 1;
+    pathVisited[node] = 1;
+
+    for(auto adjNode : graph[node]) {
+        if(!visited[adjNode]) {
+            if(dfs(adjNode, graph, visited, pathVisited) == true)
+                return true;
+        }
+        else if(pathVisited[adjNode])
+            return true;
+    }
+
+    pathVisited[node] = 0;
+    return false;
+}
+
+void eventualSafeNodesDFS(vector<vector<int>>& graph) {
+    int V = graph.size();
+    int visited[V] = {0};
+    int pathVisited[V] = {0};
+
+    for(int i = 0; i<V; i++) {
+        if(!visited[i]) {
+            dfs(i, graph, visited, pathVisited);
+        }
+    }
+
+    for(int i = 0; i < V; i++)
+        if(pathVisited[i] == 0)
+            cout << i << " ";
+    cout << endl;
+}
+
+void eventualSafeNodesBFS(vector<vector<int>> graph){
     int V = graph.size();
 
     vector<int> adjRev[V];
@@ -42,6 +76,7 @@ void eventualSafeNodes(vector<vector<int>> graph){
 
     for(auto i : safeNodes)
         cout << i << " ";
+    cout << endl;
 }
 
 int main() {
@@ -55,7 +90,8 @@ int main() {
         {}
     };
 
-    eventualSafeNodes(graph);
+    eventualSafeNodesBFS(graph);
+    eventualSafeNodesDFS(graph);
     cout << endl;
 
     return 0;

@@ -47,7 +47,7 @@ bool optimal(Node* root, int sum) {
     int left = nextIter.next();
     int right = beforeIter.next();
 
-    while(left <= right) {
+    while(left < right) {
         if(left + right == sum)
             return true;
         else if(left + right < sum)

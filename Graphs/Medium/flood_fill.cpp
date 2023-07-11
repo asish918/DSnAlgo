@@ -1,40 +1,93 @@
 #include<iostream>
+#include<algorithm>
+#include<utility>
+#include<queue>
+#include<vector>
 using namespace std;
 
-void dfs(int row, int col, int ans[3][3], int image[3][3], int drow[], int dcol[], int initColor, int newColor){
-    ans[row][col] = newColor;
+void dfs(int sr, int sc, vector<vector<int>>& grid, int initColor, int newColor, int drow[], int dcol[], vector<vector<int>>& image) {
+    image[sr][sc] = newColor;
+    int n = grid.size();
+    int m = grid[0].size();
 
-    for(int i = 0; i<4; i++){
-        int nrow = row + drow[i];
-        int ncol = col + dcol[i];
+    for(int i = 0; i<4; i++) {
+        int nrow = sr + drow[i];
+        int ncol = sc + dcol[i];
 
-        if(nrow >= 0 && nrow < 3 && ncol >= 0 && ncol < 3 && image[nrow][ncol] == initColor && ans[nrow][ncol] != newColor)
-            dfs(nrow, ncol, ans, image, drow, dcol, initColor, newColor);
+        if(nrow >= 0 && nrow < n && ncol >= 0 && ncol < m && grid[nrow][ncol] == initColor && image[nrow][ncol] != newColor) {
+            dfs(nrow, ncol, grid, initColor, newColor, drow, dcol, image);
+        }
     }
 }
 
-int main(){
-    int image[3][3] = {
-        {1, 1, 1},
-        {1, 1, 0},
-        {1, 0, 1}
-    };
-    
-    int ans[3][3];
+void dfsApproach(vector<vector<int>>& grid, int sr, int sc, int newColor) {
+    int initColor = grid[sr][sc];
+    vector<vector<int>> image = grid;;
 
-    for(int i = 0; i<3; i++)
-        for(int j = 0; j<3; j++)
-            ans[i][j] = image[i][j];
-
-    int initColor = image[1][1];
     int drow[] = {-1, 0, 1, 0};
     int dcol[] = {0, 1, 0, -1};
-    dfs(1, 1, ans, image, drow, dcol, initColor, 2);
 
-    for(int i = 0; i<3; i++){
-       for(int j = 0; j<3; j++)
-           cout << ans[i][j] << " ";
-       cout << endl;
+    dfs(sr, sc, grid, initColor, newColor, drow, dcol, image);
+
+    for(auto i : image){
+        for(auto j : i)
+            cout << j << " ";
+        cout << endl;
     }
+    cout << "----------" << endl;
+}
+
+void bfsApproach(vector<vector<int>>& grid, int sr, int sc, int newColor) {
+    int initColor = grid[sr][sc];
+    int n = grid.size();
+    int m = grid[0].size();
+    vector<vector<int>> image = grid;
+
+    queue<pair<int, int>> q;
+    q.push({sr, sc});
+    image[sr][sc] = newColor;
+
+    int drow[] = {-1, 0, 1, 0};
+    int dcol[] = {0, 1, 0, -1};
+
+    while(!q.empty()) {
+        auto it = q.front();
+        q.pop();
+
+        int row = it.first;
+        int col = it.second;
+
+        for(int i = 0; i<4; i++) {
+            int nrow = row + drow[i];
+            int ncol = col + dcol[i];
+
+            if(nrow >= 0 && nrow < n && ncol >= 0 && ncol < m && grid[nrow][ncol] == initColor && image[nrow][ncol] != newColor) {
+                q.push({nrow, ncol});
+                image[nrow][ncol] = newColor;
+            } 
+        }
+    }
+
+    
+    for(auto i : image){
+        for(auto j : i)
+            cout << j << " ";
+        cout << endl;
+    }
+    cout << "----------" << endl;
+}
+
+int main() {
+    vector<vector<int>> grid = {
+        {1, 1, 1},
+        {1, 1, 0},
+        {1, 0, 1},
+    };
+    int sr = 1, sc = 1, color = 2;
+
+    dfsApproach(grid, sr, sc, color);
+    bfsApproach(grid, sr, sc, color);
+
     return 0;
 }
+

@@ -7,6 +7,7 @@ int main(){
     cin >> n >> m;
 
     //Adjacency Matrix
+    //Store weights instead of 1 of graph edges are weighted
     //int adjMatrix[n + 1][n + 1] = {0};
 
     //for(int i = 0; i<m; i++){
@@ -17,6 +18,7 @@ int main(){
     //}
 
     //Adjacency List
+    //Store pairs instead of values in the list if graph has edge weights
     vector<int> adjList[n + 1];
     for(int i = 0; i<m; i++){
         int u, v;

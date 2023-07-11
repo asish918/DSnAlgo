@@ -25,8 +25,6 @@ bool isNStraightHand(int hand[], int n, int groupSize){
 
             m[i]--;
             if(m[i] == 0){
-                if(i != q.top())
-                    return false;
                 q.pop();
             }
         }
