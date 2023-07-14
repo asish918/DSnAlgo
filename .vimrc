@@ -216,3 +216,4 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 
 nnoremap cpf i#include<iostream><Esc>ousing namespace std;<Esc>o<CR>int main(){<Esc>o<Esc>oreturn 0;<Esc>o}<Esc>kki
+autocmd vimEnter *.cpp map <F8> :w <CR> :!clear ; g++-13 --std=c++17 %; if [ -f a.out ]; then time ./a.out; rm a.out; fi <CR>

@@ -1,42 +1,56 @@
-if(grid[0][0]==1)return -1;
-        //defining starting and ending nodes
-        int srow=0;
-        int scol=0;
-        int trow=grid.size()-1;
-        int tcol=grid[0].size()-1;
-        
-        int m=grid.size();
-        int n=grid[0].size();
-        //defining the initial configuration
-        vector<vector<int>>dist(m,vector<int>(n,1e9));//distance matrix
-        dist[srow][scol]=1;
-        queue<pair<int,pair<int,int>>>q;//queue: dist,row,col
-        q.push({1,{0,0}});
-        
-        //defining the movements
-        int drow[]={-1,-1,0,1,1,1,0,-1};
-        int dcol[]={0,1,1,1,0,-1,-1,-1};
+#include<iostream>
+#include<utility>
+#include<queue>
+#include<vector>
+using namespace std;
 
-        //djkistra implementation
-        while(!q.empty())
-        {
-            int d=q.front().first;
-            int row=q.front().second.first;
-            int col=q.front().second.second;
-            q.pop();
-            for(int i=0;i<8;i++)
-            {
-                int nrow=row+drow[i];
-                int ncol=col+dcol[i];
-                if(nrow>=0 && nrow<m && ncol>=0 && ncol<n && grid[nrow][ncol]==0 && dist[nrow][ncol]>d+1)
-                {
-                    dist[nrow][ncol]=d+1;
-                    q.push({d+1,{nrow,ncol}});
-                }
+int findShortestPath(vector<vector<int>>& grid, pair<int, int> source, pair<int, int> destination) {
+    int n = grid.size();
+    int m = grid[0].size();
+
+    vector<vector<int>> dist(n, vector<int>(m , 1e9));
+    queue<pair<int, pair<int, int>>> q;
+
+    dist[source.first][source.second] = 0;
+    q.push({0, {source.first, source.second}});
+
+    int directions[5] = {-1, 0, 1, 0, -1};
+
+    while(!q.empty()) {
+        auto it = q.front();
+        q.pop();
+
+        int dis = it.first;
+        int row = it.second.first;
+        int col = it.second.second;
+
+        for(int i = 0; i<4; i++) {
+            int nrow = directions[i];
+            int ncol = directions[i + 1];
+
+            if(nrow >= 0 && nrow < n && ncol >= 0 && ncol < m && grid[nrow][ncol] == 1 && dis + 1 < dist[nrow][ncol]) {
+                if(row == destination.first && col == destination.second) return dis + 1;
+                dist[nrow][ncol] = dis + 1;
+                q.push({dis + 1, {nrow, ncol}});
             }
-            
         }
-        if(dist[trow][tcol]==1e9)//path not possible
-            return -1;
-        return dist[trow][tcol];
-        
+    }
+
+    return -1;
+}
+
+int main() {
+    vector<vector<int>> grid = {
+        {1, 1, 1, 1},
+        {1, 1, 0, 1},
+        {1, 1, 1, 1},
+        {1, 1, 0, 0},
+        {1, 0, 0, 1},
+    };
+    
+    pair<int, int> source = make_pair(0, 1);
+    pair<int, int> destination = make_pair(2, 2);
+    
+    cout << findShortestPath(grid, source, destination) << endl;
+    return 0;
+}

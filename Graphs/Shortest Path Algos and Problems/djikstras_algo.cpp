@@ -20,32 +20,34 @@ void djikstras_algo(int V, vector<vector<int>> adj[], int S){
             int weighted = adjNode[1];
             int aNode = adjNode[0];
 
+
             if(dist + weighted < dis[aNode]){
                 dis[aNode] = dist + weighted;
-                pq.push({dis[aNode, aNode]});
+                pq.push({dis[aNode], aNode});
             }
         }
     }
+
+    for(auto i : dis)
+        cout << i << " ";
+    cout << endl;
 }
 
 //Expected output - 430
 //S = 2
 //V = 3
 int main(){
-    vector<vector<int>> adj = {{
-
-        {1, 1},
-        {2, 6},
-        {2, 3},
-        {0, 1},
-        {1, 3},
-        {0, 6}
-        
-    }};
-
     int V = 3;
+    vector<vector<int>> adj[V] = {
+        {{1, 1},{2, 6}},
+        {{2, 3},{0, 1}},
+        {{1, 3},{0, 6}},
+    };
+
     int S = 2;
     
     djikstras_algo(V, adj, S);
     return 0;
 }
+
+
