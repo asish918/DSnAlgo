@@ -16,11 +16,30 @@ bool isPossible(int arr[], int n, int mid, int th){
         return false;
 }
 
+int bruteForce(int arr[], int th, int n) {
+    int ans = 1e9;
+    int low = 1;
+    int high = -1e9;
+
+    for(int i = 0; i < n; i++)
+        high = max(high, arr[i]);
+
+    for(int i = low; i <= high; i++) {
+        if(isPossible(arr, n, i, th))
+            ans = min(ans, i);
+    }
+
+    return ans;
+}
+
 int main(){
     int arr[] = {1, 2, 5, 9};
     int n = sizeof(arr) / sizeof(int);
     int th = 6;
 
+    cout << bruteForce(arr, th, n) << endl;
+
+    //Binary Search - Optimal
     int low = 1;
     int high = INT_MIN;
     int min_div = INT_MAX;

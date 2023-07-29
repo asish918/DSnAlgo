@@ -57,4 +57,16 @@ If there is no overlap, the lastEnd value is updated to the end value of the cur
 After iterating through all the intervals, the function returns the minRemovals count, which represents the minimum number of intervals to remove to make the rest of the intervals non-overlapping.
 
 In the main function, an example usage of the eraseOverlapIntervals function is demonstrated. An array of intervals is initialized, and the minimum number of intervals to remove is printed to the console.
+
+Intution - 
+Let's start by considering the intervals according to their end times. Consider the two intervals with the earliest end times. Let's say the earlier end time is x and the later one is y. We have x < y.
+
+If we can only choose to keep one interval, should we choose the one ending at x or ending at y? To avoid overlap, We should always greedily choose the interval with an earlier end time x. The intuition behind this can be summarized as follows:
+
+We choose either x or y. Let's call our choice k.
+To avoid overlap, the next interval we choose must have a start time greater than or equal to k.
+We want to maximize the intervals we take (without overlap), so we want to maximize our choices for the next interval.
+Because the next interval must have a start time greater than or equal to k, a larger value of k can never give us more choices than a smaller value of k.
+As such, we should try to minimize k. Therefore, we should always greedily choose x, since x < y.
+In general, k is equal to the end time of the most recent interval we kept.
 */
