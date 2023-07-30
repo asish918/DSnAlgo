@@ -36,7 +36,7 @@ int main(){
 
     for(int i = 0; i<sizeof(arr) / sizeof(int); i++){
         high += arr[i];
-        low = min(low, arr[i]);
+        low = max(low, arr[i]); //We will start from max element so that all the books can be assigned to atleast one student
     }
 
     while(low<=high){

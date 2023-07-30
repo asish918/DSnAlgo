@@ -3,14 +3,14 @@
 #include<algorithm>
 using namespace std;
 
-bool isShippingPossible(int arr[], int n, int mid, int days){
+bool isShippingPossible(int arr[], int n, int capacity, int days){
     int d = 1;
     int sum = 0;
 
     for(int i = 0; i<n; i++){
         sum+=arr[i];
 
-        if(sum > mid){
+        if(sum > capacity){
             d++;
             sum = arr[i];
         }
@@ -22,6 +22,24 @@ bool isShippingPossible(int arr[], int n, int mid, int days){
         return false;
 }
 
+int bruteForce(int arr[], int n, int days) {
+    int high = 0;
+    int low = 0;
+
+    for(int i = 0; i < n; i++) {
+        high += arr[i];
+        low = max(low, arr[i]);
+    }
+
+    int ans = 1e9;
+    for(int i = low; i <= high; i++) {
+        if(isShippingPossible(arr, n, i, days))
+            ans = min(ans, i);
+    }
+
+    return ans;
+}
+
 int main(){
     int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     int n = sizeof(arr)/sizeof(int);
@@ -29,7 +47,6 @@ int main(){
 
     int low = 0;
     int high = 0;
-    int ans = 0;
 
     for(int i = 0; i<n; i++){
         high+=arr[i];
@@ -41,18 +58,19 @@ int main(){
         return 0;
     }
 
-    while(low <= high){
+    cout << bruteForce(arr, n, d) << endl;
+
+    while(low < high){
         int mid = low + (high - low)/2;
         if(isShippingPossible(arr, n, mid, d)){
-            ans = mid;
-            high = mid - 1;
+            high = mid;
         }
 
         else
             low = mid + 1;
     }
 
-    cout << ans << endl;
+    cout << low << endl;
     
     return 0;
 }
